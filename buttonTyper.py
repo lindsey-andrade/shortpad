@@ -32,10 +32,9 @@ while 1:
                     
                     full_window_name = GetWindowText(GetForegroundWindow()) #only acts on active window
                     #don't try this code on the python source while it's running. it hates it
-                    #print(full_window_name) # prints out the window it's typing in
                     window_title = full_window_name.split('-')[0]
                     wildcard = ".*" + window_title + ".*"
-                    print(wildcard)
+                    
 
                     # this if loop is to make it not possible to type in the Python Shell
                     if full_window_name != "*Python 3.4.3 Shell*":
@@ -53,10 +52,12 @@ while 1:
                             w = WindowMgr()
                             w.find_window_wildcard(full_window_name)
                             w.set_foreground()
+                            print(full_window_name)
                         except:                    
                             w = WindowMgr()
                             w.find_window_wildcard(wildcard)
                             w.set_foreground()
+                            print(wildcard)
 
                         # all the text
                         if "Notepad" in full_window_name:
