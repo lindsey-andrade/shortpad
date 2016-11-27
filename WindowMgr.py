@@ -24,7 +24,9 @@ class WindowMgr:
         """put the window in the foreground"""
         win32gui.SetForegroundWindow(self._handle)
 
-
+"""
 w = WindowMgr()
-w.find_window_wildcard(".*Messenger.*")
+w.find_window_wildcard(".*SOLIDWORKS.*")
 w.set_foreground()
+"""
+
