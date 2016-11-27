@@ -1,10 +1,7 @@
 from pyserial import serial
 import time
-#from packages import keydictionary
-#from packages import windowswitch
-#above stuff not working
-from keydictionary import press, pressAndHold, release, typer, pressHoldRelease
-from windowswitch import WindowMgr
+from packages.keydictionary import press, pressAndHold, release, typer, pressHoldRelease
+from packages import WindowMgr
 from win32gui import GetWindowText, GetForegroundWindow
 
 ser = serial.Serial()

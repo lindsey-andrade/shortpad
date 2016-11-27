@@ -1,4 +1,4 @@
-from keydictionary import press, pressAndHold, release, typer, pressHoldRelease
+from packages.keydictionary import press, pressAndHold, release, typer, pressHoldRelease
 from windowswitch import WindowMgr
 import time
 

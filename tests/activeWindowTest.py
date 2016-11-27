@@ -1,4 +1,3 @@
-from windowswitch import WindowMgr
 from win32gui import GetWindowText, GetForegroundWindow
 import time
 
