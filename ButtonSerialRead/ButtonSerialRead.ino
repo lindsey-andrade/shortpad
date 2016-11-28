@@ -26,7 +26,9 @@
 
 // constants won't change. They're used here to 
 // set pin numbers:
-const int buttonPin = 15;     // the number of the pushbutton pin
+const int buttonPin1 = 15;     // the number of the pushbutton pin
+const int buttonPin2 = 16;
+const int buttonPin3 = 17;
 const int ledPin =  13;      // the number of the LED pin
   // Pin 13: Arduino has an LED connected on pin 13
   // Pin 11: Teensy 2.0 has the LED on pin 11
@@ -34,24 +36,41 @@ const int ledPin =  13;      // the number of the LED pin
   // Pin 13: Teensy 3.0 has the LED on pin 13
 
 // variables will changeys
-int buttonState = 0;         // variable for reading the pushbutton status
+int buttonState1 = 0;         // variable for reading the pushbutton status
+int buttonState2 = 0;
+int buttonState3 = 0;
+String outputString1 = "";
+String outputString2 = "";
+String outputString3 = "";
 
 void setup() {
   // initialize the LED pin as an output:
   pinMode(ledPin, OUTPUT);      
   // initialize the pushbutton pin as an input:
-  pinMode(buttonPin, INPUT);     
+  pinMode(buttonPin1, INPUT);  
+  pinMode(buttonPin2, INPUT);
+  pinMode(buttonPin3, INPUT);   
   Serial.begin(9600);
+
+
 }
 
 void loop(){
   // read the state of the pushbutton value:
-  buttonState = digitalRead(buttonPin);
-  Serial.println(buttonState);
+  buttonState1 = digitalRead(buttonPin1);
+  buttonState2 = digitalRead(buttonPin2);
+  buttonState3 = digitalRead(buttonPin3);
+
+  Serial.print("a1");
+  Serial.println(buttonState1);
+  Serial.print("a2");
+  Serial.println(buttonState2);
+  Serial.print("a3");
+  Serial.println(buttonState3);
 
   // check if the pushbutton is pressed.
   // if it is, the buttonState is HIGH:
-  if (buttonState == HIGH) {     
+  if (buttonState3 == HIGH) {     
     // turn LED on:    
     digitalWrite(ledPin, HIGH);  
   } 
