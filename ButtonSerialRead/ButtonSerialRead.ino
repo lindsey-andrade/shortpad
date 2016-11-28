@@ -61,11 +61,11 @@ void loop(){
   buttonState2 = digitalRead(buttonPin2);
   buttonState3 = digitalRead(buttonPin3);
 
-  Serial.print("a1");
+  Serial.print("1");
   Serial.println(buttonState1);
-  Serial.print("a2");
+  Serial.print("2");
   Serial.println(buttonState2);
-  Serial.print("a3");
+  Serial.print("3");
   Serial.println(buttonState3);
 
   // check if the pushbutton is pressed.
