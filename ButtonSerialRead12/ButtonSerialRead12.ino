@@ -4,7 +4,7 @@
   const int pin4 = 10; 
   const int pin5 = 11; 
   const int pin6 = 12; 
-  const int pin7 = 13; 
+  const int pin7 = 19; 
   const int pin8 = 14; 
   const int pin9 = 15; 
   const int pin10 = 16;
@@ -24,7 +24,7 @@
   int state11 = 0;
   int state12 = 0;
 
-  int ledPin = 13; 
+  
   
 void setup() {
   // put your setup code here, to run once:
@@ -42,8 +42,6 @@ void setup() {
   pinMode(pin10, INPUT); 
   pinMode(pin11, INPUT); 
   pinMode(pin12, INPUT); 
-
-  pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
@@ -68,7 +66,6 @@ void loop() {
   Serial.println(state2); 
   Serial.print("03");
   Serial.println(state3); 
-  /*
   Serial.print("04");
   Serial.println(state4); 
   Serial.print("05");

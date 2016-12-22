@@ -62,12 +62,12 @@ def sendToActiveWindow():
                         w = WindowMgr()
                         w.find_window_wildcard(full_window_name)
                         w.set_foreground()
-                        print(full_window_name)
+                        #print(full_window_name)
                 except:                    
                         w = WindowMgr()
                         w.find_window_wildcard(wildcard)
                         w.set_foreground()
-                        print(wildcard)
+                        #print(wildcard)
                 
         else:
                 print('Do not push the button in this window, dumb fuck')
@@ -123,6 +123,7 @@ while 1:
                                         
                                         # put key strokes here
                                         typer('button 1')
+                                        press('enter')
                                         
                                 
                         # Button 2 pushed
@@ -135,6 +136,7 @@ while 1:
                                         
                                         # put key strokes here
                                         typer('button 2')
+                                        press('enter')
 
                                                 
                         # Button 3 pushed
@@ -147,7 +149,116 @@ while 1:
                                         
                                         # put key strokes here
                                         typer('button 3')
-                                           
+                                        press('enter')
+
+                        # Button 4 pushed
+                        if button4Old != button4New:
+                                button4Old = button4New
+                                if button4New == 0:
+                                        print("Button 4 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 4')
+                                        press('enter')
+
+                        # Button 5 pushed
+                        if button5Old != button5New:
+                                button5Old = button5New
+                                if button5New == 0:
+                                        print("Button 5 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 5')
+                                        press('enter')
+
+                        # Button 6 pushed
+                        if button6Old != button6New:
+                                button6Old = button6New
+                                if button6New == 0:
+                                        print("Button 6 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 6')
+                                        press('enter')
+
+                        # Button 7 pushed
+                        if button7Old != button7New:
+                                button7Old = button7New
+                                if button7New == 0:
+                                        print("Button 7 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 7')
+                                        press('enter')
+
+                        # Button 8 pushed
+                        if button8Old != button8New:
+                                button8Old = button8New
+                                if button8New == 0:
+                                        print("Button 8 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 8')
+                                        press('enter')
+
+                        # Button 9 pushed
+                        if button9Old != button9New:
+                                button9Old = button9New
+                                if button9New == 0:
+                                        print("Button 9 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 9')
+                                        press('enter')
+
+                        # Button 10 pushed
+                        if button10Old != button10New:
+                                button10Old = button10New
+                                if button10New == 0:
+                                        print("Button 10 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 10')
+                                        press('enter')
+
+                        # Button 11 pushed
+                        if button11Old != button11New:
+                                button11Old = button11New
+                                if button11New == 0:
+                                        print("Button 11 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 11')
+                                        press('enter')
+
+                        # Button 12 pushed
+                        if button12Old != button12New:
+                                button12Old = button12New
+                                if button12New == 0:
+                                        print("Button 12 pushed")
+
+                                        windowName = sendToActiveWindow()
+                                        
+                                        # put key strokes here
+                                        typer('button 12')
+                                        press('enter')
+                        
                         """
                         if "Notepad" in full_window_name:
                                 typer('notepad')
