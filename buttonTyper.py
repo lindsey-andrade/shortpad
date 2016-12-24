@@ -13,8 +13,9 @@ commands = [line.split() for line in textFile]
 """
 modButtonPush function flips the modifier keys on and off. Modifier keys change the functions of the keys
 so all keys can have 4 functions (modifier key states of [0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]). Only
-one modifier key can be active at a time or shit just gets too confusing. modButtonPush toggles the pressed
-key and sets the others to zero.
+one modifier key can be active at a time or shit just gets too confusing. Could potentially make more keys
+active at once and get even more combonations but that seems excessive. So for now modButtonPush toggles the
+pressed key and sets the others to zero.
 
 The "ProgramCommands.txt" now can take in more commands. Button numbers can be from 4-12, 24-32, 34-42, 44-52.
 The buttonPush function has been modified to read the modkey states and add 20, 30, or 40 to the number of the
@@ -202,7 +203,7 @@ if __name__ == "__main__":
                                 else:
                                         print('???')
 
-                                """ Old comments - not accurate anymore
+                                """ Old comments - not accurate anymore, just ignore
                                 Modifier keys: Button 1, Button 2, Button 3
                                 
                                 These keys will pressAndHold on the down and then release
