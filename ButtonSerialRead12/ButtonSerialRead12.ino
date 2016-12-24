@@ -11,6 +11,10 @@
   const int pin11 = 17; 
   const int pin12 = 18; 
 
+  const int led1 = 20; 
+  const int led2 = 21; 
+  const int led3 = 22;
+
   int state1 = 0; 
   int state2 = 0; 
   int state3 = 0;
@@ -42,6 +46,7 @@ void setup() {
   pinMode(pin10, INPUT); 
   pinMode(pin11, INPUT); 
   pinMode(pin12, INPUT); 
+
 }
 
 void loop() {

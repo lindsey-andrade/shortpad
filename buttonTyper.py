@@ -8,6 +8,30 @@ textFile = None
 textFile = open("ProgramCommands.txt", 'r')
 commands = [line.split() for line in textFile]
 
+
+
+"""
+modButtonPush function flips the modifier keys on and off. Modifier keys change the functions of the keys
+so all keys can have 4 functions (modifier key states of [0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]). Only
+one modifier key can be active at a time or shit just gets too confusing. modButtonPush toggles the pressed
+key and sets the others to zero.
+
+The "ProgramCommands.txt" now can take in more commands. Button numbers can be from 4-12, 24-32, 34-42, 44-52.
+The buttonPush function has been modified to read the modkey states and add 20, 30, or 40 to the number of the
+button pushed. This means you don't need an extra column in the text file and it's less searching. 
+"""
+def modButtonPush(old, new, primary_modkeystate, second_modkeystate1, second_modkeystate2):
+        if old != new:
+                old = new
+                if new == 0: # button pushed down
+                        # flip the sate of modkeystate
+                        primary_modkeystate = abs(primary_modkeystate - 1)
+                        if primary_modkeystate == 1: # if you're turning a key on
+                                # turn off the other two
+                                second_modkeystate1 = 0
+                                second_modkeystate2 = 0
+                                
+        return old, new, primary_modkeystate, second_modkeystate1, second_modkeystate2
 """
 buttonPush function takes in old and new button states and the button number and pulls the correct
 key command for the active window. Key commands are kept in a text file called "ProgramCommands.txt"
@@ -16,13 +40,16 @@ in the same folder as this file.
 By total chance, if a program doesn't have defined key commands and a button is pushed in that program
 nothing happens because the temp_array of commands is empty. ¯\_(?)_/¯
 """
-def buttonPush(old, new, button_num):
+def buttonPush(old, new, button_num, modkeyA, modkeyB, modkeyC):
         temp_array = []
         newline = [0, 0, 0]
 
         if old != new:
                 old = new
                 if new == 0:
+
+                        print(modkeyA, modkeyB, modkeyC)
+                        
                         activeWindowName = sendToActiveWindow()
                         # create a temporary array with only the commands for the active window
                         for line in commands:
@@ -34,11 +61,19 @@ def buttonPush(old, new, button_num):
                                         # pull out the button and keys from the lines
                                         # the correct program
                                         button = int(line[0].replace(",", ""))
+
                                         key = line[2].replace("\'", "")
                                         
                                         # create a temporary array to store only the commands
                                         # for the active window
                                         temp_array.append([button, program, key])
+                                        
+                        if modkeyA == 1:
+                                button_num = button_num + 20
+                        elif modkeyB == 1:
+                                button_num = button_num + 30
+                        elif modkeyC == 1:
+                                button_num = button_num + 40
                                         
                         for line in temp_array:
                                 if line[0] == button_num:
@@ -124,6 +159,12 @@ if __name__ == "__main__":
         button12New = None
 
         count = 1
+
+
+        modkeyA = 0
+        modkeyB = 0
+        modkeyC = 0
+        
         while 1:
                 try:
                         new = str(ser.readline())
@@ -161,7 +202,7 @@ if __name__ == "__main__":
                                 else:
                                         print('???')
 
-                                """
+                                """ Old comments - not accurate anymore
                                 Modifier keys: Button 1, Button 2, Button 3
                                 
                                 These keys will pressAndHold on the down and then release
@@ -183,7 +224,7 @@ if __name__ == "__main__":
                                 the release is done. Although if that happens then we might
                                 have bigger issues. 
                                 """
-
+                                """
                                 # Button 1 pushed (Modifier key 1)
                                 if button1Old != button1New:
                                         button1Old = button1New
@@ -227,16 +268,22 @@ if __name__ == "__main__":
                                         elif button3New == 1:
                                                 print("Button 3 released")
                                                 release('alt')
-                                                
-                                button4Old, button4New = buttonPush(button4Old, button4New, buttonNum)
-                                button5Old, button5New = buttonPush(button5Old, button5New, buttonNum)
-                                button6Old, button6New = buttonPush(button6Old, button6New, buttonNum)
-                                button7Old, button7New = buttonPush(button7Old, button7New, buttonNum)
-                                button8Old, button8New = buttonPush(button8Old, button8New, buttonNum)
-                                button9Old, button9New = buttonPush(button9Old, button9New, buttonNum)
-                                button10Old, button10New = buttonPush(button10Old, button10New, buttonNum)
-                                button11Old, button11New = buttonPush(button11Old, button11New, buttonNum)
-                                button12Old, button12New = buttonPush(button12Old, button12New, buttonNum)
+                                """
+                                # modifier keys
+                                button1Old, button1New, modkeyA, modkeyB, modkeyC= modButtonPush(button1Old, button1New, modkeyA, modkeyB, modkeyC)
+                                button2Old, button2New, modkeyB, modkeyA, modkeyC = modButtonPush(button2Old, button2New, modkeyB, modkeyA, modkeyC)
+                                button3Old, button3New, modkeyC, modkeyA, modkeyB = modButtonPush(button3Old, button3New, modkeyC, modkeyA, modkeyB)
+
+                                # normal buttons
+                                button4Old, button4New = buttonPush(button4Old, button4New, buttonNum, modkeyA, modkeyB, modkeyC)
+                                button5Old, button5New = buttonPush(button5Old, button5New, buttonNum, modkeyA, modkeyB, modkeyC)
+                                button6Old, button6New = buttonPush(button6Old, button6New, buttonNum, modkeyA, modkeyB, modkeyC)
+                                button7Old, button7New = buttonPush(button7Old, button7New, buttonNum, modkeyA, modkeyB, modkeyC)
+                                button8Old, button8New = buttonPush(button8Old, button8New, buttonNum, modkeyA, modkeyB, modkeyC)
+                                button9Old, button9New = buttonPush(button9Old, button9New, buttonNum, modkeyA, modkeyB, modkeyC)
+                                button10Old, button10New = buttonPush(button10Old, button10New, buttonNum, modkeyA, modkeyB, modkeyC)
+                                button11Old, button11New = buttonPush(button11Old, button11New, buttonNum, modkeyA, modkeyB, modkeyC)
+                                button12Old, button12New = buttonPush(button12Old, button12New, buttonNum, modkeyA, modkeyB, modkeyC)
 
                                 # Old button push commands. Now in function form. 
                                 """
