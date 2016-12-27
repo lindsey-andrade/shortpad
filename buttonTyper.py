@@ -82,8 +82,12 @@ def buttonPush(old, new, button_num, modkeyA, modkeyB, modkeyC):
                                         if '+' in key:
                                                 keys = key.split('+')
                                                 pressHoldRelease(keys[0], keys[1])
+                                                print(button_num, key)
+                                        elif key == 'esc': #lol it tries to type "esc"
+                                                press('esc')
                                         else:
                                                 typer(key)
+                        
 
         return old, new
                                   
@@ -111,12 +115,12 @@ def sendToActiveWindow():
                         w = WindowMgr()
                         w.find_window_wildcard(full_window_name)
                         w.set_foreground()
-                        #print(full_window_name)
+                        print(full_window_name)
                 except:                    
                         w = WindowMgr()
                         w.find_window_wildcard(wildcard)
                         w.set_foreground()
-                        #print(wildcard)
+                        print(wildcard)
                 
         else:
                 print('Do not push the button in this window')
@@ -240,7 +244,7 @@ if __name__ == "__main__":
                                                 print("Button 1 released")
                                                 release('shift')
                                                 
-                                        
+                              
                                 # Button 2 pushed (Modifier key 2)
                                 if button2Old != button2New:
                                         button2Old = button2New
@@ -255,7 +259,7 @@ if __name__ == "__main__":
                                                 print("Button 2 released")
                                                 release('ctrl')
 
-                                                        
+                                """                        
                                 # Button 3 pushed (Modifier key 3)
                                 if button3Old != button3New:
                                         button3Old = button3New
@@ -265,15 +269,15 @@ if __name__ == "__main__":
                                                 windowName = sendToActiveWindow()
                                                 
                                                 # put key strokes here
-                                                pressAndHold('alt')
+                                                pressAndHold('shift')
                                         elif button3New == 1:
                                                 print("Button 3 released")
-                                                release('alt')
-                                """
+                                                release('shift')
+                                
                                 # modifier keys
                                 button1Old, button1New, modkeyA, modkeyB, modkeyC= modButtonPush(button1Old, button1New, modkeyA, modkeyB, modkeyC)
                                 button2Old, button2New, modkeyB, modkeyA, modkeyC = modButtonPush(button2Old, button2New, modkeyB, modkeyA, modkeyC)
-                                button3Old, button3New, modkeyC, modkeyA, modkeyB = modButtonPush(button3Old, button3New, modkeyC, modkeyA, modkeyB)
+                                #button3Old, button3New, modkeyC, modkeyA, modkeyB = modButtonPush(button3Old, button3New, modkeyC, modkeyA, modkeyB)
 
                                 # normal buttons
                                 button4Old, button4New = buttonPush(button4Old, button4New, buttonNum, modkeyA, modkeyB, modkeyC)
