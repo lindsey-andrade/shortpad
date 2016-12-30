@@ -1,20 +1,25 @@
+  // Assign button pins to I/O pins on the board for easy use later. There are 12 buttons. 
+  // Could I have picked better naming for these constants? Yes. 
   const int pin1 = 7; 
   const int pin2 = 8;
   const int pin3 = 9; 
   const int pin4 = 10; 
   const int pin5 = 11; 
   const int pin6 = 12; 
-  const int pin7 = 19; 
+  const int pin7 = 19; // the I/O pin 13 is connected to the LED on the Teensy so skip that
   const int pin8 = 14; 
   const int pin9 = 15; 
   const int pin10 = 16;
   const int pin11 = 17; 
   const int pin12 = 18; 
 
+  // Reserve some I/O pins for LEDs just incase we want some later... 
+  // Currently no LEDs are attached to the Arduino ¯\_(ツ)_/¯
   const int led1 = 20; 
   const int led2 = 21; 
   const int led3 = 22;
 
+  // Set all the initial states of the buttons to 0 - this is the non-pushed state of the button. 
   int state1 = 0; 
   int state2 = 0; 
   int state3 = 0;
@@ -28,12 +33,11 @@
   int state11 = 0;
   int state12 = 0;
 
-  
-  
 void setup() {
-  // put your setup code here, to run once:
+  // Start up the Serial! We're going to use that to talk to Python
   Serial.begin(9600);
 
+  // Set all the button pins to INPUTS. 
   pinMode(pin1, INPUT); 
   pinMode(pin2, INPUT); 
   pinMode(pin3, INPUT); 
@@ -47,10 +51,16 @@ void setup() {
   pinMode(pin11, INPUT); 
   pinMode(pin12, INPUT); 
 
+  // Set all the LED pins to OUTPUTS. 
+  pinMode(led1, OUTPUT); 
+  pinMode(led2, OUTPUT); 
+  pinMode(led3, OUTPUT);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // This is the code that will loop forever:
+
+  // Read the states of each button. "1" is pushed, "0" is not pushed. 
   state1 = digitalRead(pin1); 
   state2 = digitalRead(pin2); 
   state3 = digitalRead(pin3); 
@@ -64,7 +74,9 @@ void loop() {
   state11 = digitalRead(pin11); 
   state12 = digitalRead(pin12);
  
-
+  // Print out the button number and its state. This will be read by Python via pyserial. 
+  // Notice the "print" and "println" commands. This is so the button name and state print on the same line. 
+  // For example, this prints "011" if the first button is pressed down.
   Serial.print("01");
   Serial.println(state1); 
   Serial.print("02");
@@ -89,15 +101,20 @@ void loop() {
   Serial.println(state11); 
   Serial.print("12");
   Serial.println(state12); 
-  
-  /*
-  if (state10 == HIGH) {     
-    // turn LED on:    
-    digitalWrite(ledPin, LOW); 
-  } 
-  else {
-    digitalWrite(ledPin, HIGH);
+
+  if (Serial.available() > 0){
+    char data = Serial.read();
+    if (data == 1) {
+      digitalWrite(led3, LOW);
+      digitalWrite(led1, LOW);
+    } else if (data == 2) {
+      digitalWrite(led1, HIGH);
+      digitalWrite(led3, LOW);
+    } else {
+      digitalWrite(led1, LOW);
+      digitalWrite(led3, HIGH);
+    }
   }
-  */
+
 
 }

@@ -3,6 +3,8 @@ import time
 from packages.keydictionary import press, pressAndHold, release, typer, pressHoldRelease
 from packages.windowswitch import WindowMgr
 from win32gui import GetWindowText, GetForegroundWindow
+import struct
+
 textFile = None
 
 textFile = open("ProgramCommands.txt", 'r')
@@ -21,18 +23,35 @@ The "ProgramCommands.txt" now can take in more commands. Button numbers can be f
 The buttonPush function has been modified to read the modkey states and add 20, 30, or 40 to the number of the
 button pushed. This means you don't need an extra column in the text file and it's less searching. 
 """
-def modButtonPush(old, new, primary_modkeystate, second_modkeystate1, second_modkeystate2):
+        
+
+def modButtonPush(old, new, primary_modkeystate, second_modkeystate1, button_num):
         if old != new:
                 old = new
                 if new == 0: # button pushed down
                         # flip the sate of modkeystate
                         primary_modkeystate = abs(primary_modkeystate - 1)
-                        if primary_modkeystate == 1: # if you're turning a key on
-                                # turn off the other two
+                        if primary_modkeystate == 1: # if you're turning a key on ...
+                                # ... turn off the other two
                                 second_modkeystate1 = 0
-                                second_modkeystate2 = 0
+                        if button_num == 1:
+                                modkeyA = primary_modkeystate
+                                modkeyB = second_modkeystate1
+                        elif button_num == 2:
+                                modkeyB = primary_modkeystate
+                                modkeyA = second_modkeystate1
+
+                        if [modkeyA, modkeyB] == [0, 0]:
+                                ser.write(struct.pack('>B', 1))
+                        elif [modkeyA, modkeyB] == [1, 0]:
+                                ser.write(struct.pack('>B', 2))
+                        elif [modkeyA, modkeyB] == [0, 1]:
+                                ser.write(struct.pack('>B', 3))
                                 
-        return old, new, primary_modkeystate, second_modkeystate1, second_modkeystate2
+        return old, new, primary_modkeystate, second_modkeystate1
+
+
+
 """
 buttonPush function takes in old and new button states and the button number and pulls the correct
 key command for the active window. Key commands are kept in a text file called "ProgramCommands.txt"
@@ -72,8 +91,6 @@ def buttonPush(old, new, button_num, modkeyA, modkeyB, modkeyC):
                         if modkeyA == 1:
                                 button_num = button_num + 20
                         elif modkeyB == 1:
-                                button_num = button_num + 30
-                        elif modkeyC == 1:
                                 button_num = button_num + 40
                                         
                         for line in temp_array:
@@ -85,6 +102,8 @@ def buttonPush(old, new, button_num, modkeyA, modkeyB, modkeyC):
                                                 print(button_num, key)
                                         elif key == 'esc': #lol it tries to type "esc"
                                                 press('esc')
+                                        elif key == 'del':
+                                                press('del')
                                         else:
                                                 typer(key)
                         
@@ -120,6 +139,7 @@ def sendToActiveWindow():
                         w = WindowMgr()
                         w.find_window_wildcard(wildcard)
                         w.set_foreground()
+                        print(full_window_name)
                         print(wildcard)
                 
         else:
@@ -173,6 +193,7 @@ if __name__ == "__main__":
         while 1:
                 try:
                         new = str(ser.readline())
+                        
                                 
                         if len(new) == 10: # sometimes serial outputs messed up strings. this filters it
                                 buttonNum = int(new[2:4]);
@@ -275,9 +296,11 @@ if __name__ == "__main__":
                                                 release('shift')
                                 
                                 # modifier keys
-                                button1Old, button1New, modkeyA, modkeyB, modkeyC= modButtonPush(button1Old, button1New, modkeyA, modkeyB, modkeyC)
-                                button2Old, button2New, modkeyB, modkeyA, modkeyC = modButtonPush(button2Old, button2New, modkeyB, modkeyA, modkeyC)
+                                button1Old, button1New, modkeyA, modkeyB = modButtonPush(button1Old, button1New, modkeyA, modkeyB, buttonNum)
+                                button2Old, button2New, modkeyB, modkeyA = modButtonPush(button2Old, button2New, modkeyB, modkeyA, buttonNum)
                                 #button3Old, button3New, modkeyC, modkeyA, modkeyB = modButtonPush(button3Old, button3New, modkeyC, modkeyA, modkeyB)
+
+
 
                                 # normal buttons
                                 button4Old, button4New = buttonPush(button4Old, button4New, buttonNum, modkeyA, modkeyB, modkeyC)
