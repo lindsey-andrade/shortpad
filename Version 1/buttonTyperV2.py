@@ -64,39 +64,15 @@ class KeyboardShortCut(threading.Thread):
                         if key == 1:                           
                             self.modValues[1] = abs(self.modValues[key] - 1) #this is the error
                             self.modValues[2] = 0
-                            print(self.modValues)
+                            # print(self.modValues)
                             
                         elif key == 2: 
                             self.modValues[2] = abs(self.modValues[2] - 1)
                             self.modValues[1] = 0
-                            print(self.modValues)
+                            # print(self.modValues)
 
                         self.changedModkey = 1
                         
-                    
-                        ### testing
-
-                        """
-                        ### original
-                        if key == 1:
-                            self.newModDict[key] = abs(value - 1)
-                            if self.newModDict[key] == 0: 
-                                self.newModDict[2] = 1
-                        elif key == 2: 
-                            self.newModDict[key] = abs(value - 1)
-                            if self.newModDict[key] == 0: 
-                                self.newModDict[1] = 1
-
-                        # arduino commands to turn LEDs on
-                        modkeyA = self.newModDict[1]
-                        modkeyB = self.newModDict[2 
-                        if [modkeyA, modkeyB] == [1, 1]:
-                                self.ser.write(struct.pack('>B', 1))
-                        elif [modkeyA, modkeyB] == [0, 1]:
-                                self.ser.write(struct.pack('>B', 2))
-                        elif [modkeyA, modkeyB] == [1, 0]:
-                                self.ser.write(struct.pack('>B', 3))
-                        """
 
 
     """
@@ -115,9 +91,7 @@ class KeyboardShortCut(threading.Thread):
                 if self.oldButtonDict[key] != self.newButtonDict[key]:
                     self.oldButtonDict[key] = self.newButtonDict[key]
 
-                    if value == 0: 
-                            #print(modkeyA, modkeyB, modkeyC)
-                            
+                    if value == 0:                             
                         # activeWindowName = self.sendToActiveWindow()
                         activeWindowName = self.sendToActiveWindow()
                         # activeWindowName = self.activeWindowName()
@@ -144,60 +118,18 @@ class KeyboardShortCut(threading.Thread):
                                         press('del')
                                 else:
                                         typer(keyval)
-
-
-
-                        # # create a temporary array with only the commands for the active window
-                        # for line in commands:
-                        #         # pull out the program to test against the active window
-                        #         program = line[1].replace("\'", "")
-                        #         program = str(program.replace(",", ""))
-                                
-                        #         if program in activeWindowName:
-                        #                 # pull out the button and keys from the lines
-                        #                 # the correct program
-                        #                 button = int(line[0].replace(",", ""))
-
-                        #                 keyval = line[2].replace("\'", "")
-                                        
-                        #                 # create a temporary array to store only the commands
-                        #                 # for the active window
-                        #                 temp_array.append([button, program, keyval])
-                                    
-                        # button_num = key   
-
-                        # modkeyA = self.modValues[1]
-                        # modkeyB = self.modValues[2]
-
-                        # if modkeyA == 1:
-                        #         button_num = button_num + 20
-                        # elif modkeyB == 1:
-                        #         button_num = button_num + 40
-                                        
-                        # for line in temp_array:
-                        #         if line[0] == button_num:
-                        #                 keyval = line[2]
-                        #                 if '+' in keyval:
-                        #                         keys = keyval.split('+')
-                        #                         pressHoldRelease(keys[0], keys[1])
-                        #                 elif keyval == 'esc': #lol it tries to type "esc"
-                        #                         press('esc')
-                        #                 elif keyval == 'del':
-                        #                         press('del')
-                        #                 else:
-                        #                         typer(keyval)
                             
                                       
     def sendToActiveWindow(self):
             ## Type in Window Code - START
             full_window_name = GetWindowText(GetForegroundWindow()) #only acts on active window
-            print(full_window_name)
+            # print(full_window_name)
 
             w = WindowMgr()
             #don't try this code on the python source while it's running. it hates it
             if "@" in full_window_name:
                 window_title = full_window_name.split(" @")[0]
-                print (window_title)
+                # print(window_title)
                 w.find_window_wildcard(window_title)
             else:
                 window_title = full_window_name.split('-')[0]
@@ -219,11 +151,11 @@ class KeyboardShortCut(threading.Thread):
                 """
                 
                 try:
-                    w.find_window_wildcard(full_window_name)
-                    print("full " + full_window_name)
-                except:                    
                     w.find_window_wildcard(wildcard)
-                    print("wild " + wildcard)
+                    # print("wild " + wildcard)
+                except:   
+                    w.find_window_wildcard(full_window_name)
+                    # print("full " + full_window_name)
                 finally:
                     w.set_foreground()
                     
@@ -305,30 +237,10 @@ class KeyboardShortCut(threading.Thread):
                 
                 # modifier keys
                 self.modButtonPush()
-                
-                """
-                self.button1Old, self.button1New, self.modkeyA, self.modkeyB = self.modButtonPush(self.button1Old, self.button1New, self.modkeyA, self.modkeyB, buttonNum, root)
-                self.button2Old, self.button2New, self.modkeyB, self.modkeyA = self.modButtonPush(self.button2Old, self.button2New, self.modkeyB, self.modkeyA, buttonNum, root)
-                #button3Old, button3New, modkeyC, modkeyA, modkeyB = modButtonPush(button3Old, button3New, modkeyC, modkeyA, modkeyB)
-                """
 
                 # normal buttons
                 self.buttonPush()
-                """
-                self.button4Old, self.button4New = self.buttonPush(self.button4Old, self.button4New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                self.button5Old, self.button5New = self.buttonPush(self.button5Old, self.button5New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                self.button6Old, self.button6New = self.buttonPush(self.button6Old, self.button6New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                self.button7Old, self.button7New = self.buttonPush(self.button7Old, self.button7New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                self.button8Old, self.button8New = self.buttonPush(self.button8Old, self.button8New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                self.button9Old, self.button9New = self.buttonPush(self.button9Old, self.button9New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                self.button10Old, self.button10New = self.buttonPush(self.button10Old, self.button10New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                self.button11Old, self.button11New = self.buttonPush(self.button11Old, self.button11New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                self.button12Old, self.button12New = self.buttonPush(self.button12Old, self.button12New, buttonNum, self.modkeyA, self.modkeyB, self.modkeyC)
-                """
-                """              
-                self.oldButtonDict = self.newButtonDict
-                self.oldModDict = self.newModDict
-                """
+
         except ser.SerialTimeoutException:
             print('Data could not be read')
                 
@@ -367,7 +279,7 @@ if __name__ == "__main__":
 
         # # Gui update
         if keyboard.detectChange():
-            print(keyboard.activeWindowName())
+            # print(keyboard.activeWindowName())
             if modkeyA == 1:
                 pass
                 activeWindow = keyboard.activeWindowName()
